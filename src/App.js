@@ -1,9 +1,29 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
+import heroImage from "./assets/hero_web.webp"; 
+import heroImageMobile from "./assets/hero_mobile.webp"; 
 
 
 function App() {
+  // 初期値としてウィンドウ幅に応じた画像をセット
+  const [bgImage, setBgImage] = useState(window.innerWidth > 768 ? heroImage : heroImageMobile);
+
+  useEffect(() => {
+    // ウィンドウのリサイズイベントを監視
+    const handleResize = () => {
+      // ウィンドウ幅が 768px より大きい場合はデスクトップ画像を使用
+      setBgImage(window.innerWidth > 768 ? heroImage : heroImageMobile);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // クリーンアップ関数（コンポーネントがアンマウントされる際にリスナーを削除）
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -97,7 +117,11 @@ function App() {
       </nav>
 
       {/* ヒーローセクション */}
-      <header className="hero">
+      <header className="hero"
+      style={{
+        backgroundImage: `url(${bgImage})`, 
+      }}
+      >
         <div className="hero-text">
           <h1>テクノロジーで未来を創る</h1>
           <p>- 変革を実現するイノベーション -</p>
