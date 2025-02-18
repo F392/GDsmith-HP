@@ -57,7 +57,7 @@ body {
 /* ヒーローセクション */
 .hero {
   text-align: left;
-  background-image: url("assets/hero_web.webp");
+  background-image: url("../public/hero_web.webp");
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -232,7 +232,7 @@ body {
 
 /* ヒーローセクション */
 .hero {
-  background-image: url("assets/hero_mobile.webp");
+  background-image: url("../public/hero_mobile.webp");
   text-align: center;
 }
 
