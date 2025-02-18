@@ -17,53 +17,33 @@ function App() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    emailjs.init("KaXDh5Y6K7Kc58Rzo")
-    emailjs
-      .send(
-        "service_9mlodq8", // EmailJSのService ID
-        "template_p57jupy", // EmailJSのTemplate ID
-        {
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-          company:formData.company,
-        },
-        "KaXDh5Y6K7Kc58Rzo" // EmailJSのUser ID
-      )
-      .then((response) => {
-        console.log("メールが送信されました", response);
-        alert("メールが送信されました！");
-        setFormData({ name: "", email: "", message: "", company: "" });
-      })
-      .catch((error) => {
-        console.error("メール送信に失敗しました", error);
-        alert("メール送信に失敗しました...");
-      });
-
-      emailjs
-      .send(
-        "service_9mlodq8", // EmailJSのService ID
-        "template_2s0o8ba", // EmailJSのTemplate ID
-        {
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-          company:formData.company,
-        },
-        "KaXDh5Y6K7Kc58Rzo" // EmailJSのUser ID
-      )
-      .then((response) => {
-        console.log("メールが送信されました", response);
-        alert("メールが送信されました！");
-        setFormData({ name: "", email: "", message: "", company: "" });
-      })
-      .catch((error) => {
-        console.error("メール送信に失敗しました", error);
-        alert("メール送信に失敗しました...");
-      });
+    const serviceID = "service_9mlodq8";
+    const userID = "KaXDh5Y6K7Kc58Rzo"; 
+  
+    // 複数のテンプレートIDを配列で指定
+    const templateIDs = ["template_p57jupy", "template_2s0o8ba"];
+  
+    try {
+      await Promise.all(
+        templateIDs.map((templateID) =>
+          emailjs.send(serviceID, templateID,
+            {
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            company:formData.company,
+          }, userID)
+        )
+      );
+  
+      alert("メールが送信されました！");
+      setFormData({ name: "", email: "", message: "", company: "" });
+    } catch (error) {
+      console.error("メール送信に失敗しました", error);
+      alert("メール送信に失敗しました...");
+    }
   };
 
   const [menuOpen, setMenuOpen] = useState(false);
