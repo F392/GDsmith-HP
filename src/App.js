@@ -1,8 +1,8 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
-import heroImage from "./assets/hero_web.webp"; 
-import heroImageMobile from "./assets/hero_mobile.webp"; 
+import heroImage from "../public/hero_web.webp"; 
+import heroImageMobile from "../public/hero_mobile.webp"; 
 
 
 function App() {
